@@ -4,13 +4,12 @@ import './todo-list-item.css';
 
 export default class TodoListItem extends Component {
 
-  onLabelClick = () => {
-    console.log(`Done: ${ this.props.label }`);
-  };
-
   /*
   constructor() {
     super();
+    this.state = {
+      done: false
+    };
 
     this.onLabelClick = () => {
       console.log(`Done: ${ this.props.label }`);
@@ -18,9 +17,25 @@ export default class TodoListItem extends Component {
   }
   */
 
+  state = {
+    done: false
+  };
+
+  onLabelClick = () => {
+    this.setState({
+      done: this.state.done ? false : true
+    });
+  };
+
   render() {
 
     const { label, important = false } = this.props;
+    const { done } = this.state;
+
+    let className = 'todo-list-item';
+    if (done) {
+      className += ' done';
+    }
 
     const style = {
       color: important ? 'steelblue' : 'black',
@@ -28,7 +43,7 @@ export default class TodoListItem extends Component {
     };
   
     return (
-      <span className="todo-list-item">
+      <span className={ className }>
         <span
           className="todo-list-item-label"
           style={style}
